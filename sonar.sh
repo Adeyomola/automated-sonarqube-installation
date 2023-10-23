@@ -42,7 +42,7 @@ sudo chown -R sonarqube:sonarqube /opt/sonarqube
 
 # configure the server
 sudo bash -c 'cat << FOE >> /opt/sonarqube/conf/sonar.properties
-sonar.jdbc.username=adeyomola
+sonar.jdbc.username=sonarqube
 sonar.jdbc.password=adeyomola
 sonar.jdbc.url=jdbc:postgresql://localhost:5432/sq
 sonar.web.host=127.0.0.1
