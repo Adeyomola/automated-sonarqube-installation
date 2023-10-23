@@ -46,6 +46,9 @@ FOE'
 # increase memory map
 sudo bash -c 'echo -e "vm.max_map_count=262144\nfs.file-max=65536" >> /etc/sysctl.conf'
 
+# apply changes to sysctl.conf
+sudo sysctl --system
+
 # create ulimit file for sonarqube
 sudo touch /etc/security/limits.d/99-sonarqube.conf
 
