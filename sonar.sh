@@ -35,7 +35,7 @@ sudo mv sonarqube-9.6.1.59531 /opt/sonarqube
 rm sonarqube-9.6.1.59531.zip
 
 # create sonarqube user
-sudo adduser --system --no-create-home --group --disabled-login sonarqube
+sudo useradd -b /opt/sonarqube -s /bin/bash sonarqube
 
 # grant permissions to /opt/sonarqube
 sudo chown -R sonarqube:sonarqube /opt/sonarqube
