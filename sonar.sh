@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# update apt
+sudo apt update
+
 # install jdk
 sudo apt install openjdk-11-jdk
 
