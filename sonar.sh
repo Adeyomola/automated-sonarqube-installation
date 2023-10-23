@@ -4,7 +4,7 @@
 sudo apt update
 
 # install jdk
-sudo apt install openjdk-11-jdk
+sudo apt install openjdk-11-jdk -y
 
 # add postgreSQL GPG key
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
