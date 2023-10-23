@@ -71,17 +71,17 @@ Description=SonarQube service
 After=syslog.target network.target
 
 [Service]
-Type=forking
-
-ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
-ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
-
+Type=simple
 User=sonarqube
 Group=sonarqube
+PermissionsStartOnly=true
+ExecStart=/bin/nohup /usr/lib/jvm/java-11-openjdk-amd64/bin/java -Xms32m -Xmx32m -Djava.net.preferIPv4Stack=true -jar /opt/sonarqube/lib/sonar-application-8.5.jar
+StandardOutput=syslog
+LimitNOFILE=131072
+LimitNPROC=8192
+TimeoutStartSec=5
 Restart=always
-
-LimitNOFILE=65536
-LimitNPROC=4096
+SuccessExitStatus=143
 
 [Install]
 WantedBy=multi-user.target
