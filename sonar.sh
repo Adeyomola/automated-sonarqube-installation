@@ -25,6 +25,9 @@ sudo -u postgres createdb -O sonarqube sq >> /dev/null
 # download sonarqube
 wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.2.1.78527.zip
 
+# install unzip
+sudo apt install unzip -y
+
 # unzip the package
 unzip -q sonarqube-10.2.1.78527.zip
 
