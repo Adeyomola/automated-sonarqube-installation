@@ -100,6 +100,9 @@ sudo systemctl start sonarqube
 # enable service on startup
 sudo systemctl enable sonarqube
 
+# test
+curl 127.0.0.1:9000
+
 # show status
 sudo systemctl status sonarqube
 
