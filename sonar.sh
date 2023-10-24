@@ -4,7 +4,7 @@
 sudo apt update
 
 # install jdk
-sudo apt install openjdk-11-jdk -y
+sudo apt install openjdk-17-jdk -y
 
 # add postgreSQL GPG key
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
@@ -23,7 +23,7 @@ sudo -u postgres psql -c "create role sonarqube createdb createrole login passwo
 sudo -u postgres createdb -O sonarqube sq >> /dev/null
 
 # download sonarqube
-wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.6.1.59531.zip
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.2.1.78527.zip
 
 # unzip the package
 unzip -q sonarqube-9.6.1.59531.zip
