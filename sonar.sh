@@ -26,13 +26,13 @@ sudo -u postgres createdb -O sonarqube sq >> /dev/null
 wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.2.1.78527.zip
 
 # unzip the package
-unzip -q sonarqube-9.6.1.59531.zip
+unzip -q sonarqube-10.2.1.78527.zip
 
 # move sonarqube to the /opt directory
-sudo mv sonarqube-9.6.1.59531 /opt/sonarqube
+sudo mv sonarqube-10.2.1.78527.zip /opt/sonarqube
 
 # delete zip file
-rm sonarqube-9.6.1.59531.zip
+rm sonarqube-10.2.1.78527.zip
 
 # create sonarqube user
 sudo useradd -b /opt/sonarqube -s /bin/bash sonarqube
