@@ -101,6 +101,9 @@ sudo systemctl start sonarqube
 # enable service on startup
 sudo systemctl enable sonarqube
 
+# restart sonarqube service
+sudo systemctl restart sonarqube
+
 ## set up reverse proxy with nginx
 # install nginx
 sudo apt install nginx -y
