@@ -29,7 +29,7 @@ wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.2.1.78
 unzip -q sonarqube-10.2.1.78527.zip
 
 # move sonarqube to the /opt directory
-sudo mv sonarqube-10.2.1.78527.zip /opt/sonarqube
+sudo mv sonarqube-10.2.1.78527 /opt/sonarqube
 
 # delete zip file
 rm sonarqube-10.2.1.78527.zip
