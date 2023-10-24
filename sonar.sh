@@ -19,7 +19,7 @@ sudo apt update
 sudo apt install postgresql postgresql-contrib -y
 
 # create sonarqube user and database
-sudo -u postgres psql -c "create role sonarqube createdb createrole login password 'adeyomola'"
+sudo -u postgres psql -c "create role sonarqube createdb createrole login password 'adeyomola'" >> /dev/null
 sudo -u postgres createdb -O sonarqube sq >> /dev/null
 
 # download sonarqube
@@ -35,7 +35,7 @@ sudo mv sonarqube-10.2.1.78527 /opt/sonarqube
 rm sonarqube-10.2.1.78527.zip
 
 # create sonarqube user
-sudo useradd -b /opt/sonarqube -s /bin/bash sonarqube
+sudo adduser --system --no-create-home --group --disabled-login sonarqube
 
 # grant permissions to /opt/sonarqube
 sudo chown -R sonarqube:sonarqube /opt/sonarqube
@@ -49,14 +49,20 @@ sonar.web.host=127.0.0.1
 sonar.web.javaAdditionalOpts=-server
 FOE'
 
-# increase memory map
-sudo bash -c 'echo -e "vm.max_map_count=262144\nfs.file-max=65536" >> /etc/sysctl.conf'
+# increase memory map dynamically and permanently
+sysctl -w vm.max_map_count=524288
+sysctl -w fs.file-max=131072 
+sudo bash -c 'echo -e "vm.max_map_count=524288\nfs.file-max=131072" >> /etc/sysctl.conf'
 
 # apply changes to sysctl.conf
 sudo sysctl --system
 
 # create ulimit file for sonarqube
 sudo touch /etc/security/limits.d/99-sonarqube.conf
+
+# set ulimits dynamically
+ulimit -n 131072
+ulimit -u 8192
 
 # add limits to the ulimit file
 sudo bash -c 'echo -e "sonarqube   -   nofile   65536\nsonarqube   -   nproc    4096" >> /etc/security/limits.d/99-sonarqube.conf'
@@ -75,7 +81,8 @@ Type=simple
 User=sonarqube
 Group=sonarqube
 PermissionsStartOnly=true
-ExecStart=/bin/nohup /usr/lib/jvm/java-11-openjdk-amd64/bin/java -Xms32m -Xmx32m -Djava.net.preferIPv4Stack=true -jar /opt/sonarqube/lib/sonar-application-8.5.jar
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
 StandardOutput=syslog
 LimitNOFILE=131072
 LimitNPROC=8192
