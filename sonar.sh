@@ -77,13 +77,12 @@ Description=SonarQube service
 After=syslog.target network.target
 
 [Service]
-Type=simple
+Type=forking
 User=sonarqube
 Group=sonarqube
 PermissionsStartOnly=true
 ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
 ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
-StandardOutput=syslog
 LimitNOFILE=131072
 LimitNPROC=8192
 TimeoutStartSec=5
@@ -100,12 +99,6 @@ sudo systemctl start sonarqube
 # enable service on startup
 sudo systemctl enable sonarqube
 
-# test
-curl 127.0.0.1:9000
-
-# show status
-sudo systemctl status sonarqube
-
 ## set up reverse proxy with nginx
 # install nginx
 sudo apt install nginx -y
@@ -113,21 +106,19 @@ sudo apt install nginx -y
 # enable on startup
 sudo systemctl enable nginx
 
-# create nginx config file for sonarqube
-sudo touch /etc/nginx/sites-available/sonarqube.conf
-
 # append configuration for sonarqube
-sudo bash -c 'cat << "EOF" > /etc/nginx/sites-available/sonarqube.conf
+sudo bash -c 'cat << "EOF" > /etc/nginx/sites-available/default
 server {
-  listen 80;
-  location / {
-    proxy_pass http://127.0.0.1:9000;
-  }
+    listen 80;
+    access_log /var/log/nginx/sonar.access.log;
+    error_log /var/log/nginx/sonar.error.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:9000;
+    }
 }
 EOF'
 
-# enable the nginx sonarqube config
-sudo ln -s /etc/nginx/sites-available/sonarqube.conf /etc/nginx/sites-enabled/
-
-# restart nginx
+# reload and restart nginx
+sudo systemctl reload nginx
 sudo systemctl restart nginx
