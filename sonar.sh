@@ -88,6 +88,8 @@ LimitNPROC=8192
 TimeoutStartSec=5
 Restart=always
 SuccessExitStatus=143
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
